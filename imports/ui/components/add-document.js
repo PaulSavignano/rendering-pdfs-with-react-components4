@@ -26,7 +26,7 @@ const handleInsertDocument = (event) => {
 }
 
 export const AddDocument = () => (
-  <form className="AddDocument" onClick={ handleInsertDocument }>
+  <form className="AddDocument" onSubmit={ handleInsertDocument }>
     <FormGroup>
       <FormControl
         name="title"
@@ -41,6 +41,6 @@ export const AddDocument = () => (
         placeholder="What do you want to say?"
       />
     </FormGroup>
-    <Button bsStyle="success">Add Document</Button>
+    <Button type="submit" bsStyle="success">Add Document</Button>
   </form>
 )

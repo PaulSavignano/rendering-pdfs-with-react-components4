@@ -1,8 +1,29 @@
 import React from 'react'
 import InlineCss from 'react-inline-css'
-import { Row, Col, ListGroupItem, Button } from 'react-bootstrap'
+import { ListGroupItem, Button } from 'react-bootstrap'
+import fileSaver from 'file-saver'
+import { Meteor } from 'meteor/meteor'
 import { Bert } from 'meteor/themeteorchef:bert'
-import { updateDocument, removeDocument } from '../../api/documents/methods.js'
+import { removeDocument } from '../../api/documents/methods.js'
+import { base64ToBlob } from '../../modules/base64-to-blob'
+
+const downloadPDF = (event) => {
+  event.preventDefault()
+  const { target } = event
+  const documentId = target.getAttribute('data-id')
+  target.innerHTML = '<em>Downloading...</em>'
+  target.classList.add('downloading')
+  Meteor.call('documents.download', { documentId }, (error, response) => {
+    if (error) {
+      Bert.alert(error.reason, 'danger')
+    } else {
+      const blob = base64ToBlob(response.base64)
+      fileSaver.saveAs(blob, response.fileName)
+      target.innerHTML = 'Download'
+      target.classList.remove('downloading')
+    }
+  })
+}
 
 const handleRemoveDocument = (documentId, event) => {
   event.preventDefault()
@@ -50,7 +71,6 @@ export const Document = ({ document }) => (
       <Button data-id={ document._id } bsStyle="success" onClick={ downloadPDF }>Download</Button>
       <Button
         bsStyle="danger"
-        className="btn-block"
         onClick={ handleRemoveDocument.bind(this, document._id) }>
         Remove
       </Button>

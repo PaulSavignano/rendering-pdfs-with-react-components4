@@ -31,7 +31,7 @@ const generatePDF = (html, fileName) => {
   }
 }
 
-const generateComponentAsHTML = (component, props) => {
+const getComponentAsHTML = (component, props) => {
   try {
     return ReactDOMServer.renderToStaticMarkup(component(props))
   } catch (exception) {
