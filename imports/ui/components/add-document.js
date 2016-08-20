@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormGroup, FormControl } from 'react-bootstrap';
+import { FormGroup, FormControl, Button } from 'react-bootstrap';
 import { Bert } from 'meteor/themeteorchef:bert';
 import { insertDocument } from '../../api/documents/methods.js';
 
@@ -34,13 +34,13 @@ export const AddDocument = () => (
         placeholder="Type a document title."
       />
     </FormGroup>
-    <FormControl>
+    <FormGroup>
       <FormControl
         name="body"
         type="text"
         placeholder="What do you want to say?"
       />
-    </FormControl>
+    </FormGroup>
     <Button bsStyle="success">Add Document</Button>
   </form>
 )
